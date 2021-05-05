@@ -1,13 +1,12 @@
-package com.HrishikeshPujari.quickchat;
+package com.HrishikeshPujari.Note4you;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -16,19 +15,26 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+
 
 
 public class LoginActivity extends AppCompatActivity {
+    public static final String NOTE_PREFS = "NotePrefs";
+    public static final String USER_NAME_KEY = "username";
+    public static final String PASSWORD_KEY = "password";
+    public static final String EMAIL_KEY = "email";
 
-    // TODO: Add member variables here:
-    // UI references.
+
+
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
-    private FirebaseAuth mAuth;
+    SharedPreferences mSharedPreferences;
+
+    private String savedUsername;
+    private String savedPassword;
+    private String savedEmail;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,14 @@ public class LoginActivity extends AppCompatActivity {
 
         mEmailView = (AutoCompleteTextView) findViewById(R.id.login_email);
         mPasswordView = (EditText) findViewById(R.id.login_password);
+        mSharedPreferences=getApplicationContext().getSharedPreferences(NOTE_PREFS,MODE_PRIVATE);
+        if(mSharedPreferences!=null){
+            savedEmail=mSharedPreferences.getString(EMAIL_KEY,"");
+            savedPassword=mSharedPreferences.getString(PASSWORD_KEY,"");
+            savedUsername=mSharedPreferences.getString(USER_NAME_KEY,"");
+
+
+        }
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -49,14 +63,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: Grab an instance of FirebaseAuth
-        mAuth=FirebaseAuth.getInstance();
+
 
     }
 
     // Executed when Sign in button pressed
     public void signInExistingUser(View v)   {
-        // TODO: Call attemptLogin() here
+
         attemptLogin();
 
 
@@ -64,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // Executed when Register button pressed
     public void registerNewUser(View v) {
-        Intent intent = new Intent(this, com.HrishikeshPujari.quickchat.RegisterActivity.class);
+        Intent intent = new Intent(this, com.HrishikeshPujari.Note4you.RegisterActivity.class);
         finish();
         startActivity(intent);
     }
@@ -77,22 +90,15 @@ public class LoginActivity extends AppCompatActivity {
             return ;
         }else{
             Toast.makeText(this,"Login in progress..",Toast.LENGTH_SHORT).show();
-        }
-        // TODO: Use FirebaseAuth to sign in with email & password
-        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.d("Flashchat","Signin() complete"+task.isSuccessful());
-                if(!task.isSuccessful()){
-                    Log.d("Flashchat","Problem Signing in :"+task.getException());
-                    showErrorDialog("There was a Problem Signing in!");
-                }else{
-                    Intent intent=new Intent(LoginActivity.this,AfterLogin.class);
-                    finish();
-                    startActivity(intent);
-                }
+            if (password.equals(savedPassword) && email.equals(savedEmail)) {
+                Intent intent=new Intent(LoginActivity.this,AfterLogin.class);
+                finish();
+                startActivity(intent);
+            }else{
+                showErrorDialog("There was a Problem Signing in!");
             }
-        });
+        }
+
 
 
 

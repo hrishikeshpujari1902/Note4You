@@ -5,20 +5,20 @@
     android:layout_height="fill_parent"
     android:background="@color/light_purple"
     android:fitsSystemWindows="true"
+
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-
-    tools:context="com.HrishikeshPujari.quickchat.MainChatActivity">
+    tools:context="com.HrishikeshPujari.Note4you.DetailViewActivity">
 
 
     <RelativeLayout
         android:id="@+id/singleDisplaynameContainer_mainchat"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/chat_list_view"
+        android:layout_above="@id/display_image"
         android:background="#BEBEBE"
         android:orientation="vertical"
 
@@ -28,7 +28,7 @@
         tools:ignore="NotSibling">
 
         <TextView
-            android:id="@+id/displayname_mainchat"
+            android:id="@+id/display_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -40,81 +40,49 @@
             android:textSize="25sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/email_mainchat"
-
-            android:layout_width="wrap_content"
-
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:padding="10dp"
-            android:text="@string/prompt_msg1"
-            android:textColor="#808080"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="366dp"
+        android:layout_height="610dp"
+
         app:layout_constraintBottom_toTopOf="@+id/listFooter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/wallpaper_mainchat_min"
         app:layout_constraintTop_toBottomOf="@+id/singleDisplaynameContainer_mainchat">
 
-        <ListView
-            android:id="@+id/chat_list_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <ImageView
+            android:id="@+id/display_image"
+            android:layout_width="296dp"
+            android:layout_height="404dp"
 
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/todo"
+            app:srcCompat="@drawable/add_image" />
 
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="4dp"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            android:transcriptMode="alwaysScroll"
-
-            />
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/listFooter"
-        android:layout_width="fill_parent"
-        android:layout_height="48dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="#FFB347"
         android:gravity="bottom"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <EditText
-            android:id="@+id/messageInput"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:autofillHints=""
-            android:gravity="center_horizontal"
-            android:hint="@string/prompt_msg"
-            android:imeActionLabel="@string/action_send"
-            android:imeOptions="actionUnspecified"
-            android:inputType="textCapSentences|textAutoCorrect"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black" />
-
-        <ImageButton
-            android:id="@+id/sendButton"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/display_description"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/circle_shape"
-            android:contentDescription="@string/action_send"
-            android:padding="10dp"
-            android:src="@android:drawable/ic_menu_send" />
+            android:layout_gravity="center"
+            android:text="@string/description"
+            android:textColor="#222222"
+            android:textSize="25sp" />
+
     </LinearLayout>
 
 

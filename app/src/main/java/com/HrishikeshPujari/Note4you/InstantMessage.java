@@ -1,4 +1,4 @@
-package com.HrishikeshPujari.quickchat;
+package com.HrishikeshPujari.Note4you;
 
 public class InstantMessage {
     private String message;

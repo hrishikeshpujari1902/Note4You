@@ -9,7 +9,7 @@
               android:paddingRight="@dimen/activity_horizontal_margin"
               android:paddingTop="@dimen/activity_vertical_margin"
               android:background="@drawable/background_login_min"
-              tools:context="com.HrishikeshPujari.quickchat.RegisterActivity"
+              tools:context="com.HrishikeshPujari.Note4you.RegisterActivity"
               android:gravity="top">
 
 
@@ -18,21 +18,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@color/white"
+            android:paddingTop="100dp"
+
             >
 
             <AutoCompleteTextView
                 android:id="@+id/register_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
                 android:hint="@string/prompt_username"
+                android:imeOptions="actionNext"
+                android:inputType="textNoSuggestions"
+                android:maxLines="1"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:inputType="textNoSuggestions"
-                android:imeOptions="actionNext"
-                android:maxLines="1"
                 android:textIsSelectable="false"
-                android:textStyle="bold"/>
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,18 +104,17 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/register_sign_up_button"
-            style="?android:textAppearanceMedium"
-            android:background="@color/white"
-            android:textColor="@color/green"
-            android:onClick="signUp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/action_sign_up"
-            android:textStyle="bold"/>
-
+    <Button
+        android:id="@+id/register_sign_up_button"
+        style="?android:textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:onClick="signUp"
+        android:text="@string/action_sign_up"
+        android:textColor="@color/green"
+        android:textStyle="bold" />
 
 
 </LinearLayout>
