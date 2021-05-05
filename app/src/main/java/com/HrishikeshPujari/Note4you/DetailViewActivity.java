@@ -35,9 +35,8 @@ public class DetailViewActivity extends AppCompatActivity {
         mTitleTextview=(TextView)findViewById(R.id.display_title);
         mDesciptionTextview=(TextView)findViewById(R.id.display_description);
         mImageView=(ImageView)findViewById(R.id.display_image);
-        mImageView.setImageBitmap(mBitmap);
-        mDesciptionTextview.setText(mDescription);
-        mTitleTextview.setText(mTitle);
+
+
 
 
     }
@@ -49,6 +48,9 @@ public class DetailViewActivity extends AppCompatActivity {
         mDescription=noteIntent.getStringExtra("description");
         mStringBitmap=noteIntent.getStringExtra("bitmap");
         mBitmap=StringToBitMap(mStringBitmap);
+        mImageView.setImageBitmap(mBitmap);
+        mDesciptionTextview.setText(mDescription);
+        mTitleTextview.setText(mTitle);
 
 
 

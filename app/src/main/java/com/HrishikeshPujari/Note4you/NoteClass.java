@@ -3,6 +3,7 @@ package com.HrishikeshPujari.Note4you;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.util.Base64;
 
@@ -17,6 +18,9 @@ public class NoteClass {
     public static final int COL_TITLE=1;
     public static final int COL_DESCRIPTION=2;
     public static final int COL_IMAGE=03;
+
+    private static final float PREFERRED_WIDTH=250;
+    private static final float PREFERRED_HEIGHT=250;
 
 
 
@@ -33,7 +37,7 @@ public class NoteClass {
     public NoteClass(String title, String description, Bitmap bitmap) {
         this.title = title;
         this.description = description;
-        this.image= BitMapToString(bitmap);
+        this.image= BitMapToString(resizedBitmap(bitmap));
     }
 
     public static String getTitle() {
@@ -71,6 +75,13 @@ public class NoteClass {
     public Bitmap resizedBitmap(Bitmap  bitmap){
         int width=bitmap.getWidth();
         int height=bitmap.getHeight();
+        float scaledWidth=PREFERRED_WIDTH / width;
+        float scaledHeight=PREFERRED_HEIGHT / height;
+        Matrix matrix =new Matrix();
+        matrix.postScale(scaledWidth,scaledHeight);
+        Bitmap resizedBitmap=Bitmap.createBitmap(bitmap,0,0,width,height,matrix,false);
+        return resizedBitmap;
+
 
 
     }

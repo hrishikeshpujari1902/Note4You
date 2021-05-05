@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -105,16 +106,11 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     private void saveData() {
-        mTitle = titleView.getText().toString();
-        mDescription = descriptionView.getText().toString();
-        NoteClass noteclass = new NoteClass(mTitle, mDescription, finalBitmap);
-        mNoteClassArrayList.add(noteclass);
-        SharedPreferences mSharepreferences = getSharedPreferences(NOTE_PREFS_1, MODE_PRIVATE);
-        SharedPreferences.Editor editor = mSharepreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(mNoteClassArrayList);
-        editor.putString("note_list", json);
-        editor.apply();
+        finalBitmap=((BitmapDrawable)mImageView.getDrawable()).getBitmap();
+        NoteClass noteClass=new NoteClass(titleView.getText().toString(),descriptionView.getText().toString(),finalBitmap);
+        new MemoryObHelper(this).addMemory(noteClass);
+        finish();
+
 
     }
 
@@ -147,7 +143,7 @@ public class AddNoteActivity extends AppCompatActivity {
             Bundle extras=data.getExtras();
             Bitmap image=(Bitmap)extras.get("data");
             mImageView.setImageBitmap(image);
-            finalBitmap=image;
+
 
         }
         if (requestCode == GALLER_REQ_CODE && resultCode == Activity.RESULT_OK) {
@@ -156,7 +152,7 @@ public class AddNoteActivity extends AppCompatActivity {
                 Uri selectedImage=data.getData();
                 InputStream imageStream=getContentResolver().openInputStream(selectedImage);
                 mImageView.setImageBitmap(BitmapFactory.decodeStream(imageStream));
-                finalBitmap=BitmapFactory.decodeStream(imageStream);
+
 
             }catch(IOException exception){
                 exception.printStackTrace();
@@ -168,69 +164,24 @@ public class AddNoteActivity extends AppCompatActivity {
 
     }
 
-    private String getFileExt(Uri contentUri) {
-        ContentResolver c = getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return mime.getExtensionFromMimeType(c.getType(contentUri));
-
-    }
 
 
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
 
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
+
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
-            }
+            startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
         }
     }
 
-    private void loaddata() {
-        SharedPreferences mSharepreferences = getSharedPreferences(NOTE_PREFS_1, MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = mSharepreferences.getString("note_list", null);
-        Type type = new TypeToken<ArrayList<NoteClass>>() {
-        }.getType();
-        mNoteClassArrayList = gson.fromJson(json, type);
-        if (mNoteClassArrayList == null) {
-            mNoteClassArrayList = new ArrayList<>();
-        }
 
-    }
+
 
     @Override
     protected void onStart() {
         super.onStart();
-        loaddata();
+
     }
 }

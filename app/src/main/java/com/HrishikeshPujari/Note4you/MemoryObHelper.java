@@ -24,13 +24,22 @@ public class MemoryObHelper extends SQLiteOpenHelper {
                     NoteContract.NoteEntry.COLUMN_DESCRIPTION + " TEXT," +
                     NoteContract.NoteEntry.COLUMN_IMAGE + " TEXT)";
 
-    public MemoryObHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public MemoryObHelper(Context context) {
+        super(context, DATABASE_NAME,null,DATBASE_VERSION);
+
+    }
+    public Cursor readAllMemories(){
+        SQLiteDatabase db=getReadableDatabase();
+        return db.query(
+                NoteContract.NoteEntry.TABLE_NAME,
+                null,null,null,null,null,null
+        );
     }
 
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL(SQL_CREATE_ENTRIES);
 
     }
 
@@ -38,12 +47,12 @@ public class MemoryObHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-    public boolean addMemory(){
+    public boolean addMemory(NoteClass noteClass){
         SQLiteDatabase db=getReadableDatabase();
         ContentValues contentValues=new ContentValues();
-        contentValues.put(NoteContract.NoteEntry.COLUMN_TITLE,NoteClass.getTitle());
-        contentValues.put(NoteContract.NoteEntry.COLUMN_DESCRIPTION,NoteClass.getDescription());
-        contentValues.put(NoteContract.NoteEntry.COLUMN_IMAGE,NoteClass.getBitmap());
+        contentValues.put(NoteContract.NoteEntry.COLUMN_TITLE,noteClass.getTitle());
+        contentValues.put(NoteContract.NoteEntry.COLUMN_DESCRIPTION,noteClass.getDescription());
+        contentValues.put(NoteContract.NoteEntry.COLUMN_IMAGE,noteClass.getImageaAsString());
         return db.insert(NoteContract.NoteEntry.TABLE_NAME,null,contentValues)!=-1;
 
 
