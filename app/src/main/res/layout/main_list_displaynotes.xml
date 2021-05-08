@@ -4,8 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/singleDisplaynameContainer"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:elevation="5dp"
+    android:background="#FFFFFF"
     android:orientation="vertical">
 
     <ImageView
@@ -27,11 +29,11 @@
         android:padding="10dp"
         android:text="@string/sample_message1"
         android:textColor="@android:color/primary_text_light"
-        android:textSize="15sp"
+        android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_list" />
+        app:layout_constraintStart_toEndOf="@+id/imageView_list"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/display_description_list"
@@ -41,10 +43,9 @@
         android:padding="10dp"
         android:text="@string/description"
         android:textColor="#808080"
-        android:textSize="15sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/display_title_list"
         app:layout_constraintTop_toBottomOf="@+id/display_title_list" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -53,6 +54,49 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp" />
+
+    <TextView
+        android:id="@+id/display_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="@string/date"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView_list"
+        app:layout_constraintTop_toBottomOf="@+id/display_description_list"
+        tools:ignore="SmallSp" />
+
+    <TextView
+        android:id="@+id/display_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="@string/time"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/display_date"
+        app:layout_constraintTop_toBottomOf="@+id/display_date"
+        tools:ignore="SmallSp" />
+
+    <TextView
+        android:id="@+id/display_pages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pages_1"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.229"
+        app:layout_constraintStart_toEndOf="@+id/display_time"
+        app:layout_constraintTop_toBottomOf="@+id/display_date" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="45dp"
+        android:layout_height="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toEndOf="@+id/display_pages"
+        app:layout_constraintTop_toTopOf="@+id/display_pages"
+        app:srcCompat="@drawable/cloud_connected" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

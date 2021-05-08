@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Note4You</string>
+    <string name="app_name">Note4YouFirebase</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
@@ -31,4 +31,13 @@
     <string name="save">Save</string>
     <string name="add_new_note">Add New Note</string>
     <string name="description">Description</string>
+    <string name="floating_button_to_add">floating button to add</string>
+    <string name="nothing">nothing</string>
+
+    <string name="string_date" />
+
+
+    <string name="pages_1">|  pages:1  |</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
 </resources>

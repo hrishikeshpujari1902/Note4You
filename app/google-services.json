@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "702853209642",
+    "project_id": "note4you-ba48b",
+    "storage_bucket": "note4you-ba48b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702853209642:android:5554d2d8624d7b70302d53",
+        "android_client_info": {
+          "package_name": "com.HrishikeshPujari.Note4youFirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "702853209642-98d0u43ocqhpdpiqqta42lj1fgu3t6uj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF6-IJO64JPX-OCfZqjCkjCQoYGKlV54M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "702853209642-98d0u43ocqhpdpiqqta42lj1fgu3t6uj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,29 +1,25 @@
-package com.HrishikeshPujari.Note4you;
+package com.HrishikeshPujari.Note4youFirebase;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Base64;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.bumptech.glide.Glide;
 
 
 public class DetailViewActivity extends AppCompatActivity {
 
         private String mTitle;
         private String mDescription;
-        private String mStringBitmap;
-        private Bitmap mBitmap;
-
+        private String mImageUri;
+        private TextView mDateTextView;
+        private TextView mTimeTextView;
         private TextView mTitleTextview;
         private TextView mDesciptionTextview;
         private ImageView mImageView;
@@ -35,6 +31,9 @@ public class DetailViewActivity extends AppCompatActivity {
         mTitleTextview=(TextView)findViewById(R.id.display_title);
         mDesciptionTextview=(TextView)findViewById(R.id.display_description);
         mImageView=(ImageView)findViewById(R.id.display_image);
+        mDateTextView=(TextView)findViewById(R.id.date_detail);
+        mTimeTextView=(TextView)findViewById(R.id.time_detail);
+
 
 
 
@@ -46,12 +45,12 @@ public class DetailViewActivity extends AppCompatActivity {
         Intent noteIntent=getIntent();
         mTitle=noteIntent.getStringExtra("title");
         mDescription=noteIntent.getStringExtra("description");
-        mStringBitmap=noteIntent.getStringExtra("bitmap");
-        mBitmap=StringToBitMap(mStringBitmap);
-        mImageView.setImageBitmap(mBitmap);
+        mImageUri=noteIntent.getStringExtra("image");
+        mDateTextView.setText(noteIntent.getStringExtra("date"));
+        mTimeTextView.setText(noteIntent.getStringExtra("time"));
+        Glide.with(this).load(mImageUri).into(mImageView);
         mDesciptionTextview.setText(mDescription);
         mTitleTextview.setText(mTitle);
-
 
 
     }

@@ -1,4 +1,4 @@
-package com.HrishikeshPujari.Note4you;
+package com.HrishikeshPujari.Note4youFirebase;
 
 public class InstantMessage {
     private String message;

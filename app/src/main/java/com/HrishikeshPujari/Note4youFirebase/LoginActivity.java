@@ -1,12 +1,13 @@
-package com.HrishikeshPujari.Note4you;
+package com.HrishikeshPujari.Note4youFirebase;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -16,25 +17,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class LoginActivity extends AppCompatActivity {
-    public static final String NOTE_PREFS = "NotePrefs";
-    public static final String USER_NAME_KEY = "username";
-    public static final String PASSWORD_KEY = "password";
-    public static final String EMAIL_KEY = "email";
 
-
+    public static final String APP_TAG = "Note4You";
 
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
-    SharedPreferences mSharedPreferences;
-
-    private String savedUsername;
-    private String savedPassword;
-    private String savedEmail;
-
-
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +39,6 @@ public class LoginActivity extends AppCompatActivity {
 
         mEmailView = (AutoCompleteTextView) findViewById(R.id.login_email);
         mPasswordView = (EditText) findViewById(R.id.login_password);
-        mSharedPreferences=getApplicationContext().getSharedPreferences(NOTE_PREFS,MODE_PRIVATE);
-        if(mSharedPreferences!=null){
-            savedEmail=mSharedPreferences.getString(EMAIL_KEY,"");
-            savedPassword=mSharedPreferences.getString(PASSWORD_KEY,"");
-            savedUsername=mSharedPreferences.getString(USER_NAME_KEY,"");
-
-
-        }
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -64,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+        mAuth=FirebaseAuth.getInstance();
 
     }
 
@@ -75,9 +64,9 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    // Executed when Register button pressed
+
     public void registerNewUser(View v) {
-        Intent intent = new Intent(this, com.HrishikeshPujari.Note4you.RegisterActivity.class);
+        Intent intent = new Intent(this, com.HrishikeshPujari.Note4youFirebase.RegisterActivity.class);
         finish();
         startActivity(intent);
     }
@@ -90,21 +79,32 @@ public class LoginActivity extends AppCompatActivity {
             return ;
         }else{
             Toast.makeText(this,"Login in progress..",Toast.LENGTH_SHORT).show();
-            if (password.equals(savedPassword) && email.equals(savedEmail)) {
-                Intent intent=new Intent(LoginActivity.this,AfterLogin.class);
-                finish();
-                startActivity(intent);
-            }else{
-                showErrorDialog("There was a Problem Signing in!");
-            }
         }
 
+        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                Log.d(APP_TAG,"Signin() complete"+task.isSuccessful());
+                if(!task.isSuccessful()){
+                    Log.d(APP_TAG,"Problem Signing in :"+task.getException());
+                    showErrorDialog("There was a Problem Signing in!");
+                }else{
+                    FirebaseUser user =mAuth.getCurrentUser();
+                    String userUID=user.getUid();
+                    Intent intent=new Intent(LoginActivity.this,AfterLogin.class);
+                    intent.putExtra("uid",userUID);
+                    Log.d("Note4You","uid:"+userUID);
+                    finish();
+                    startActivity(intent);
+                }
+            }
+        });
 
 
 
     }
 
-    // TODO: Show error on screen with an alert dialog
+
     private void showErrorDialog(String message) {
         new AlertDialog.Builder(this)
                 .setTitle("Ooops")
